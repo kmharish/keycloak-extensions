@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+}
+
+dependencies {
+    implementation 'org.keycloak:keycloak-core:22.0.1'
+    implementation 'org.keycloak:keycloak-server-spi:22.0.1'
+    implementation 'org.keycloak:keycloak-server-spi-private:22.0.1'
+}
+
+jar {
+    manifest {
+        attributes(
+            'Implementation-Title': 'Password Update Session Revocation',
+            'Implementation-Version': project.version
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+} 
