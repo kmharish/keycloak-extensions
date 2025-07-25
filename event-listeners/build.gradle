@@ -1,14 +1,16 @@
-plugins {
+    plugins {
     id 'java'
 }
 
 dependencies {
-    implementation 'org.keycloak:keycloak-core:22.0.1'
-    implementation 'org.keycloak:keycloak-server-spi:22.0.1'
-    implementation 'org.keycloak:keycloak-server-spi-private:22.0.1'
+    implementation 'org.keycloak:keycloak-core:24.0.5'
+    implementation 'org.keycloak:keycloak-server-spi:24.0.5'
+    implementation 'org.keycloak:keycloak-server-spi-private:24.0.5'
 }
 
 jar {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    dependsOn configurations.runtimeClasspath
     manifest {
         attributes(
             'Implementation-Title': 'Password Update Session Revocation',

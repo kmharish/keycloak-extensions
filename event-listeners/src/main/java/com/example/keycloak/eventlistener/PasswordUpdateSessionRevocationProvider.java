@@ -3,12 +3,14 @@ package com.example.keycloak.eventlistener;
 import org.keycloak.events.Event;
 import org.keycloak.events.EventListenerProvider;
 import org.keycloak.events.EventType;
+import org.keycloak.events.admin.AdminEvent;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.UserModel;
 import org.keycloak.models.UserSessionModel;
 import org.keycloak.models.UserSessionProvider;
 import org.keycloak.models.RealmModel;
 import java.util.List;
+
 
 public class PasswordUpdateSessionRevocationProvider implements EventListenerProvider {
     private final KeycloakSession session;
@@ -27,13 +29,18 @@ public class PasswordUpdateSessionRevocationProvider implements EventListenerPro
                 UserModel user = session.users().getUserById(realm, userId);
                 if (user != null) {
                     UserSessionProvider userSessionProvider = session.sessions();
-                    List<UserSessionModel> sessions = userSessionProvider.getUserSessions(realm, user);
+                    List<UserSessionModel> sessions = userSessionProvider.getUserSessionsStream(realm, user).toList();
                     for (UserSessionModel userSession : sessions) {
                         userSessionProvider.removeUserSession(realm, userSession);
                     }
                 }
             }
         }
+    }
+
+    @Override
+    public void onEvent(AdminEvent adminEvent, boolean b) {
+
     }
 
     @Override

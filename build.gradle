@@ -11,16 +11,4 @@ subprojects {
     repositories {
         mavenCentral()
     }
-}
-
-jar {
-    manifest {
-        attributes(
-            'Implementation-Title': 'Password Update Session Killer',
-            'Implementation-Version': version
-        )
-    }
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
 } 
